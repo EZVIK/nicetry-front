@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        <img src='https://p26-tt.byteimg.com/origin/pgc-image/2e59468eba9347388beb79dcada52789.jpg' alt="logo" />
+        <img width="300px" height="300px" src='https://p26-tt.byteimg.com/origin/pgc-image/2e59468eba9347388beb79dcada52789.jpg' alt="logo" />
         <p> </p>
 	<a
           className="App-link"
