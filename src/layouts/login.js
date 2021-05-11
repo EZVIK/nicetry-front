@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { history, Link } from 'umi';
-import { authActions } from '../utils/index'
-import { connect } from 'react-redux';
-
+import { useEffect, useState } from 'react'
+import { Link, history} from 'umi';
+import { UserActions } from '@/Actions';
+import { authActions } from '@/utils'
 
 export function LoginPage(props) {
 
   const [email, setEmail] = useState("default@nicetry.fun");
   const [password, setPwd] = useState("");
-  const [submitted, SetSubmited] = useState(false)
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswdChange = (e) => setPwd(e.target.value);
@@ -17,40 +14,16 @@ export function LoginPage(props) {
   const handleLogin = async (e) =>  {
     e.preventDefault();
 
-    var data = JSON.stringify({
-      "mail": email,
-      "password": password
-    });
-    console.log(data)
-    
-    var config = {
-      method: 'post',
-      url: 'http://localhost:6079/api/v1/user/login',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
 
-    console.log("LOGIN")
-    
-    const resData = await axios(config)
+    await UserActions.Login(email, password)
+  }
 
-    console.log(JSON.stringify(resData.data.code))
-
-    if (resData.data.code == 200) {
-      localStorage.setItem("token", resData.data.data.jwt)
-      authActions.goPage('')
-    }
-  } 
-  
   useEffect( ()=>{
-    authActions.checkJwt()
-    
+
   },[])
 
   return (
-    
+
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
@@ -61,7 +34,7 @@ export function LoginPage(props) {
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           {/* <input type="hidden" name="remember" defaultValue="true" /> */}
           <div className="rounded-md shadow-sm -space-y-px">
@@ -135,14 +108,3 @@ export function LoginPage(props) {
     </div>
   )
 }
-
-
-// function mapStateToProps(state) {
-//   const { loggingIn } = state.authentication;
-//   return {
-//       loggingIn
-//   };
-// }
-
-// const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-// export { connectedLoginPage as LoginPage }; 

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { connect } from "react-redux";
 
 export const RA = {
    HttpRequest,
@@ -6,21 +7,34 @@ export const RA = {
 
 function HttpRequest(method, url, body, header) {
 
-   const jwt = localStorage.getItem('token')
+    const jwt = localStorage.getItem('token')
 
-   const http = "http://"
-   const HOST = "localhost:6079"
-   const URL_PRE = "/api/v1/"
-   const FULL_URL = http + HOST + URL_PRE + url
+    const HOST = "https://nicetry.fun"
+    const URL_PRE = "/api/v1/"
+    const FULL_URL = HOST + URL_PRE + url
 
-   header['token'] = jwt
+    header['Authorization'] = jwt
+    header['Content-Type'] = 'application/json'
 
-   let config = { 
+    let config = {
       method: method,
       url: FULL_URL,
       headers: header,
       data: body
-   };
-   console.log(config)
-   return axios(config)   
+    };
+
+  console.log((config))
+  return axios(config)
 }
+
+const mapStateToProps = (state) => {
+  return {
+    dark: state.dark
+  };
+};
+
+
+
+export default connect(mapStateToProps, null)(HttpRequest);
+
+

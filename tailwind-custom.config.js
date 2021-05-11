@@ -6,10 +6,11 @@ module.exports = {
         center: true,
       },
 
-      
+
     },
     variants: {
       extend: {},
     },
-    plugins: [],fastRefresh: {}
+  plugins: [require("nightwind")],
+  fastRefresh: {}
 };
